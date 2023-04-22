@@ -5,18 +5,14 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 import sys
 sys.path.append('../')
-# import settings
+import settings
 
-
-from envparse import Env
-
-env = Env()
-
-REAL_DATABASE_URL = env.str(
-    "REAL_DATABASE_URL", 
-    default="postgresql+asyncpg://postgres:postgres@0.0.0.0:5432/postgres"
-)
-
+# from envparse import Env
+# env = Env()
+# REAL_DATABASE_URL = env.str(
+#     "REAL_DATABASE_URL", 
+#     default="postgresql+asyncpg://postgres:postgres@0.0.0.0:5432/postgres"
+# )
 # print("200:SETTINGS")
 
 ##############################################
@@ -24,7 +20,7 @@ REAL_DATABASE_URL = env.str(
 ##############################################
 
 # create async engine for interaction with database
-engine = create_async_engine(REAL_DATABASE_URL, future=True, echo=True)
+engine = create_async_engine(settings.REAL_DATABASE_URL, future=True, echo=True)
 
 # create session for the interaction with database
 async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
